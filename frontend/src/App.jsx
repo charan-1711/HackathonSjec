@@ -1,5 +1,13 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ManagePatterns from "./pages/admin/ManagePatterns";
+import ManageQuestions from "./pages/admin/manageQuestions";
+import Notfound from "./pages/NotFound";
+import Login from "./pages/Login";
+import Reports from "./pages/admin/Reports";
+import AdminLayout from "./pages/admin/AdminLayout";
+import Dashboard from "./pages/teachers/Dashboard";
+import GeneratePaper from "./pages/admin/GeneratePaper";
 
 function App() {
   return (
@@ -18,14 +26,14 @@ function App() {
           </Route>
 
           {/* Teacher Routes */}
-          <Route path="/teacher" element={<TeacherLayout />}>
+          <Route path="/teacher" element={<Reports />}>
             <Route index element={<Dashboard />} />
             <Route path="manage-questions" element={<ManageQuestions />} />
             <Route path="generate-paper" element={<GeneratePaper />} />
           </Route>
 
           {/* 404 - Not Found */}
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<Notfound />} />
         </Routes>
       </Router>
     </>
