@@ -33,7 +33,7 @@ export default function SideBar({ sidebarOpen, setSidebarOpen }) {
             <li>
               <Link
                 to="/admin"
-                className="flex items-center space-x-3 text-gray-700 hover:text-blue-500 cursor-pointer"
+                className="flex items-center space-x-3 text-gray-700 hover:bg-blue-200 p-2 rounded-lg cursor-pointer"
                 onClick={() => setSidebarOpen(false)}
               >
                 <FiHome />
@@ -43,7 +43,7 @@ export default function SideBar({ sidebarOpen, setSidebarOpen }) {
             <li>
               <Link
                 to="/admin/manage-questions"
-                className="flex items-center space-x-3 text-gray-700 hover:text-blue-500 cursor-pointer"
+                className="flex items-center space-x-3 text-gray-700 hover:bg-blue-200 p-2 rounded-lg cursor-pointer"
                 onClick={() => setSidebarOpen(false)}
               >
                 <FiFileText />
@@ -53,7 +53,7 @@ export default function SideBar({ sidebarOpen, setSidebarOpen }) {
             <li>
               <Link
                 to="/admin/users"
-                className="flex items-center space-x-3 text-gray-700 hover:text-blue-500 cursor-pointer"
+                className="flex items-center space-x-3 text-gray-700 hover:bg-blue-200 p-2 rounded-lg cursor-pointer"
                 onClick={() => setSidebarOpen(false)}
               >
                 <FiUsers />
@@ -63,7 +63,7 @@ export default function SideBar({ sidebarOpen, setSidebarOpen }) {
             <li>
               <Link
                 to="/admin/reports"
-                className="flex items-center space-x-3 text-gray-700 hover:text-blue-500 cursor-pointer"
+                className="flex items-center space-x-3 text-gray-700 hover:bg-blue-200 p-2 rounded-lg cursor-pointer"
                 onClick={() => setSidebarOpen(false)}
               >
                 <FiBarChart2 />

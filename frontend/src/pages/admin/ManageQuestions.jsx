@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+
 export default function QuestionsPage() {
   const [questions, setQuestions] = useState([
     { id: 1, subject: "Math", module: "Algebra", text: "What is 2+2?", correct: "4" },
@@ -50,28 +51,11 @@ export default function QuestionsPage() {
           <option value="Kinematics">Kinematics</option>
         </select>
         {/* Add Question Button */}
-      <button onClick={() => setShowForm(true)} className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600">
-        Add Question
+        <div className="flex justify-between items-center mb-6"></div>
+      <button onClick={() => setShowForm((prev)=>!prev)} className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600">
+          {showForm ?"Close" : "Add Question"}
       </button>
       </div>
-      
-      {/* Questions List */}
-      <div className="bg-white p-4 shadow rounded">
-        {filteredQuestions.length === 0 ? (
-          <p className="text-gray-500">No questions found.</p>
-        ) : (
-          <ul className="space-y-3">
-            {filteredQuestions.map((q) => (
-              <li key={q.id} className="p-3 bg-gray-100 rounded">
-                <strong>{q.subject} - {q.module}:</strong> {q.text}
-                <span className="text-green-600 block">Correct Answer: {q.correct}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-      
-     
       
       {/* Add Question Form */}
       {showForm && (
@@ -81,11 +65,36 @@ export default function QuestionsPage() {
             <input type="text" placeholder="Subject" value={newQuestion.subject} onChange={(e) => setNewQuestion({ ...newQuestion, subject: e.target.value })} className="w-full p-2 border rounded" />
             <input type="text" placeholder="Module" value={newQuestion.module} onChange={(e) => setNewQuestion({ ...newQuestion, module: e.target.value })} className="w-full p-2 border rounded" />
             <textarea placeholder="Question Text" value={newQuestion.text} onChange={(e) => setNewQuestion({ ...newQuestion, text: e.target.value })} className="w-full p-2 border rounded"></textarea>
-            <input type="text" placeholder="Correct Answer" value={newQuestion.correct} onChange={(e) => setNewQuestion({ ...newQuestion, correct: e.target.value })} className="w-full p-2 border rounded" />
-            <button type="submit" className="w-full bg-green-500 text-white p-3 rounded hover:bg-green-600">Submit</button>
+            <textarea placeholder="Correct Answer" value={newQuestion.correct} onChange={(e) => setNewQuestion({ ...newQuestion, correct: e.target.value })} className="w-full p-2 border rounded"></textarea>
+            <input type="text" placeholder="CO" value={newQuestion.co} onChange={(e) => setNewQuestion({ ...newQuestion, co: e.target.value })} className="w-full p-2 border rounded" />
+            <input type="text" placeholder="PO" value={newQuestion.po} onChange={(e) => setNewQuestion({ ...newQuestion, po: e.target.value })} className="w-full p-2 border rounded" />
+            <input type="text" placeholder="BL" value={newQuestion.bl} onChange={(e) => setNewQuestion({ ...newQuestion, bl: e.target.value })} className="w-full p-2 border rounded" />
+            <div className="w-full justify-center">
+            <button type="submit" className="w-100 bg-blue-700 text-white p-3 mx-auto rounded hover:bg-blue-600">Add</button>
+            </div>
           </form>
         </div>
       )}
+
+      {/* Questions List */}
+      <div className="bg-white p-4 shadow rounded">
+        {filteredQuestions.length === 0 ? (
+          <p className="text-gray-500">No questions found.</p>
+        ) : (
+          <ul className="space-y-3">
+            {filteredQuestions.map((q) => (
+              <li key={q.id} className="p-3 bg-gray-100 rounded">
+                <strong>{q.subject} - {q.module}:</strong> {q.text}
+                <span className="text-blue-600 block">Correct Answer: {q.correct}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      
+     
+      
+      
     </div>
   );
 }
