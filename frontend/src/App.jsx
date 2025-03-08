@@ -6,8 +6,9 @@ import Notfound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Reports from "./pages/admin/Reports";
 import AdminLayout from "./pages/admin/AdminLayout";
-import Dashboard from "./pages/teachers/Dashboard";
+import Dashboard from "./pages/admin/Dashboard";
 import GeneratePaper from "./pages/admin/GeneratePaper";
+import Users from "./pages/admin/Users";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="manage-questions" element={<ManageQuestions />} />
             <Route path="manage-patterns" element={<ManagePatterns />} />
             <Route path="reports" element={<Reports />} />
+            <Route path="users" element={<Users />} />
           </Route>
 
           {/* Teacher Routes */}
