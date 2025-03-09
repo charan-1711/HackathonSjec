@@ -33,4 +33,14 @@ const deleteSubject = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Subject deleted successfully" });
 });
 
-export { addSubject, deleteSubject };
+const getAllSubjects = asyncHandler(async (req, res) => {
+  const subjects = await Subject.find({}, "code name year modules");
+
+  if (!subjects.length) {
+    return res.status(404).json({ message: "No subjects found" });
+  }
+
+  res.status(200).json({ subjects });
+});
+
+export { addSubject, deleteSubject, getAllSubjects };

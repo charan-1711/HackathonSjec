@@ -28,42 +28,47 @@ const signin = asyncHandler(async (req, res) => {
   return res.status(401).json({ message: "Incorrect password" });
 });
 
-const signup = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+const addUser = asyncHandler(async (req, res) => {
+  // ✅ Fetch admin user from DB
+  const adminUser = await userModel.findById(req.userId);
 
-  if (!email || !password) {
-    return res.status(400).json({ msg: "Email and password are required" });
+  console.log(adminUser);
+
+  if (!adminUser || adminUser.role !== "admin") {
+    return res.status(403).json({ msg: "Access denied. Admins only." });
   }
 
-  const existingUser = await userModel.findOne({ email: req.body.email });
+  const { name, email, role } = req.body;
+
+  if (!name || !email || !role) {
+    return res.status(400).json({ msg: "Name, email, and role are required" });
+  }
+
+  // ✅ Check if user already exists
+  const existingUser = await userModel.findOne({ email });
   if (existingUser) {
-    return res.status(411).json("Email already exists..");
+    return res.status(409).json({ msg: "Email already exists" });
   }
 
+  // ✅ Default password for new users
+  const defaultPassword = "1234567";
+
+  // ✅ Create new user
   const user = await userModel.create({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-    role: req.body.role,
+    name,
+    email,
+    password: defaultPassword,
+    role,
   });
 
   if (!user) {
-    return res.status(411).json("Unable to create user");
+    return res.status(500).json({ msg: "Failed to create user" });
   }
 
-  const userId = user._id;
-
-  const token = jwt.sign(
-    {
-      userId,
-    },
-    JWT_SECRET
-  );
-
-  res.json({
-    message: "User created successfully",
-    token: token,
+  res.status(201).json({
+    message: "User added successfully",
+    userId: user._id,
   });
 });
 
-export { signup, signin };
+export { addUser, signin };

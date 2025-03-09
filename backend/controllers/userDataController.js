@@ -79,4 +79,14 @@ const getUserData = asyncHandler(async (req, res) => {
   });
 });
 
-export { getUserData };
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find().select("name email role");
+
+  if (!users || users.length === 0) {
+    return res.status(404).json({ message: "No users found" });
+  }
+
+  res.status(200).json({ users });
+});
+
+export { getUserData, getAllUsers };
