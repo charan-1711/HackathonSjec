@@ -1,5 +1,7 @@
-import express from "express";
+// import express from "express";
+// import { getUserData } from "../controllers/userDataController";
+// import { authMiddleware } from "../middlewares/authMiddleware";
 
-const router = express.Router();
+// const Adminrouter = express.Router();
 
-router.post("/login");
+// export { Adminrouter };

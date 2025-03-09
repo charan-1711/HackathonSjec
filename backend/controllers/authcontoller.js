@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { asyncHandler } from "../middlewares/asyncHandler.js";
-import { userModel } from "../models/userModel.js";
+import userModel from "../models/userModel.js";
 
 const JWT_SECRET = "123456";
 
@@ -17,9 +17,7 @@ const signin = asyncHandler(async (req, res) => {
   }
 
   if (existingUser.password === password) {
-    const token = jwt.sign({ userId: existingUser._id }, JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign({ userId: existingUser._id }, JWT_SECRET);
 
     return res.status(200).json({
       token,

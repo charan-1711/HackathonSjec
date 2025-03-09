@@ -11,15 +11,17 @@ export default function Login() {
     try {
       const response = await axios.post(
         "http://localhost:3000/api/user/signin",
-        {
-          email,
-          password,
-        }
+        { email, password }
       );
 
       console.log("Login Successful:", response.data);
-      alert(`Login Successful!`);
 
+      const token = response.data.token;
+      console.log(token);
+
+      localStorage.setItem("token", token);
+
+      alert("Login Successful!");
       navigate("/admin");
     } catch (error) {
       console.error(

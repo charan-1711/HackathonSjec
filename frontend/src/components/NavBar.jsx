@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { FiUser, FiLogOut, FiLock } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const [showProfile, setShowProfile] = useState(false);
   const profileRef = useRef(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // Close profile card when clicking outside
   useEffect(() => {
