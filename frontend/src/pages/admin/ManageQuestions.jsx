@@ -48,7 +48,7 @@ export default function QuestionsPage() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      setQuestions(response.data.questions || []);
+      setQuestions(response.data.questionSets || []);
     } catch (error) {
       console.error("Error fetching questions:", error);
     }
@@ -59,9 +59,9 @@ export default function QuestionsPage() {
     fetchQuestions();
   }, []);
 
-  // Filter Questions by Subject
+  // Filter Questions by Subject Name (Fixed)
   const filteredQuestions = selectedSubject
-    ? questions.filter((q) => q.subject_id === selectedSubject)
+    ? questions.filter((q) => q.subject_id.name === selectedSubject)
     : questions;
 
   // Handle Input Change
@@ -134,7 +134,7 @@ export default function QuestionsPage() {
         >
           <option value="">All Subjects</option>
           {subjects.map((sub) => (
-            <option key={sub._id} value={sub._id}>
+            <option key={sub._id} value={sub.name}>
               {sub.name}
             </option>
           ))}
@@ -246,15 +246,45 @@ export default function QuestionsPage() {
       {/* Questions List */}
       <div className="bg-white p-4 shadow rounded">
         {filteredQuestions.length === 0 ? (
-          <p className="text-gray-500">No questions found.</p>
+          <p className="text-gray-500 text-center py-4">No questions found.</p>
         ) : (
-          <ul className="space-y-3">
-            {filteredQuestions.map((q, index) => (
-              <li key={index} className="p-3 bg-gray-100 rounded">
-                <strong>Module {q.moduleNo}:</strong> {q.question_text}{" "}
-                <span className="text-blue-600">({q.question_mark})</span>
-              </li>
-            ))}
+          <ul className="space-y-4">
+            {filteredQuestions.map((set, setIndex) =>
+              set.question_data.map((q, qIndex) => (
+                <li
+                  key={`${setIndex}-${qIndex}`}
+                  className="p-4 bg-gray-100 rounded-lg shadow-sm"
+                >
+                  <div className="grid grid-cols-2 gap-4">
+                    {/* Left Side - Question Text */}
+                    <div className="col-span-1">
+                      <p className="font-medium text-gray-800">
+                        <strong>Module {q.moduleNo}:</strong> {q.question_text}
+                      </p>
+                    </div>
+
+                    {/* Right Side - Metadata */}
+                    <div className="col-span-1 flex flex-wrap gap-4 justify-end text-sm text-gray-700">
+                      <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-md">
+                        Marks: {q.question_mark}
+                      </span>
+                      <span className="bg-green-100 text-green-700 px-3 py-1 rounded-md">
+                        BL: {q.BL}
+                      </span>
+                      <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-md">
+                        TLO: {q.TLO}
+                      </span>
+                      <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-md">
+                        CO: {q.CO}
+                      </span>
+                      <span className="bg-red-100 text-red-700 px-3 py-1 rounded-md">
+                        PO: {q.PO}
+                      </span>
+                    </div>
+                  </div>
+                </li>
+              ))
+            )}
           </ul>
         )}
       </div>

@@ -65,9 +65,10 @@ const getUserQuestionSets = async (req, res) => {
   try {
     const userId = req.userId;
 
-    const questionSets = await QuestionSet.find({
-      created_by: userId,
-    }).populate("subject_id", "name code");
+    const questionSets = await QuestionSet.find({}).populate(
+      "subject_id",
+      "name code"
+    );
 
     return res.status(200).json({ questionSets });
   } catch (error) {
