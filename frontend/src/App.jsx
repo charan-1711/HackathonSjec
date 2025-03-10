@@ -25,6 +25,7 @@ function App() {
             <Route path="manage-questions" element={<ManageQuestions />} />
             <Route path="manage-subjects" element={<Subjects />} />
             <Route path="manage-patterns" element={<ManagePatterns />} />
+            <Route path="generate-paper" element={<GeneratePaper />} />
             <Route path="reports" element={<Reports />} />
             <Route path="users" element={<Users />} />
           </Route>

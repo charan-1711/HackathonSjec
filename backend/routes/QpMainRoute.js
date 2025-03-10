@@ -9,6 +9,7 @@ import {
   addOrUpdateQuestionSet,
   getUserQuestionSets,
 } from "../controllers/questionController.js";
+import { generateQuestionPaper } from "../controllers/generateQuestion.js";
 
 const QpMainrouter = express.Router();
 
@@ -20,5 +21,7 @@ QpMainrouter.route("/subject")
 QpMainrouter.route("/question")
   .post(authMiddleware, addOrUpdateQuestionSet)
   .get(authMiddleware, getUserQuestionSets);
+
+QpMainrouter.route("/generateQp").post(authMiddleware, generateQuestionPaper);
 
 export default QpMainrouter;

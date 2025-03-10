@@ -48,7 +48,7 @@ export default function SideBar({ sidebarOpen, setSidebarOpen }) {
             </li>
             <li>
               <Link
-                to="/admin/manage-subjects"
+                to="manage-subjects"
                 className="flex items-center space-x-3 text-gray-700 hover:bg-blue-200 p-2 rounded-lg cursor-pointer"
                 onClick={() => setSidebarOpen(false)}
               >
@@ -58,7 +58,7 @@ export default function SideBar({ sidebarOpen, setSidebarOpen }) {
             </li>
             <li>
               <Link
-                to="/admin/manage-questions"
+                to="manage-questions"
                 className="flex items-center space-x-3 text-gray-700 hover:bg-blue-200 p-2 rounded-lg cursor-pointer"
                 onClick={() => setSidebarOpen(false)}
               >
@@ -68,7 +68,17 @@ export default function SideBar({ sidebarOpen, setSidebarOpen }) {
             </li>
             <li>
               <Link
-                to="/admin/users"
+                to="generate-paper"
+                className="flex items-center space-x-3 text-gray-700 hover:bg-blue-200 p-2 rounded-lg cursor-pointer"
+                onClick={() => setSidebarOpen(false)}
+              >
+                <FiFileText />
+                <span>Generate paper</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="users"
                 className="flex items-center space-x-3 text-gray-700 hover:bg-blue-200 p-2 rounded-lg cursor-pointer"
                 onClick={() => setSidebarOpen(false)}
               >
@@ -78,7 +88,7 @@ export default function SideBar({ sidebarOpen, setSidebarOpen }) {
             </li>
             <li>
               <Link
-                to="/admin/reports"
+                to="reports"
                 className="flex items-center space-x-3 text-gray-700 hover:bg-blue-200 p-2 rounded-lg cursor-pointer"
                 onClick={() => setSidebarOpen(false)}
               >
