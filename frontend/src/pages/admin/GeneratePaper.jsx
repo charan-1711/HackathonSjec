@@ -67,21 +67,46 @@ export default function GeneratePaper() {
   // Validate Question Paper
   useEffect(() => {
     if (
-      paperType === "50-marks" &&
-      count.twoMarks >= 5 &&
-      count.tenMarks >= 4
-    ) {
-      setIsGenerateEnabled(true);
-    } else if (
-      paperType === "100-marks" &&
-      count.twoMarks >= 10 &&
-      count.tenMarks >= 8
+      (paperType === "50-marks" &&
+        count.twoMarks >= 5 &&
+        count.tenMarks >= 4) ||
+      (paperType === "100-marks" && count.twoMarks >= 10 && count.tenMarks >= 8)
     ) {
       setIsGenerateEnabled(true);
     } else {
       setIsGenerateEnabled(false);
     }
   }, [paperType, count]);
+
+  // Handle Generate Question Paper
+  const handleGeneratePaper = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        "http://localhost:3000/api/qpaper/generateQp",
+        {
+          subjectId: selectedSubject,
+          maxMarks: paperType === "100-marks" ? 100 : 50,
+          course: "Third Semester MCA (Autonomous) Examinations November-2022",
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          responseType: "blob", // To handle file download
+        }
+      );
+
+      // Create a link to download the file
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "QuestionPaper.pdf");
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("Error generating question paper:", error);
+    }
+  };
 
   return (
     <div className="p-6">
@@ -120,6 +145,7 @@ export default function GeneratePaper() {
 
       {/* Generate Paper Button */}
       <button
+        onClick={handleGeneratePaper}
         className={`ml-4 px-4 py-2 rounded-lg text-white ${
           isGenerateEnabled
             ? "bg-green-500 hover:bg-green-600"

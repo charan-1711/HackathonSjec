@@ -9,7 +9,6 @@ const QuestionPaperSchema = new mongoose.Schema({
   pattern_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "QuestionPaperPattern",
-    required: true,
   },
   generated_by: {
     type: mongoose.Schema.Types.ObjectId,
