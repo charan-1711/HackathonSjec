@@ -1,12 +1,16 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiUser, FiLogOut } from "react-icons/fi";
+import axios from "axios";
+import { FiUser, FiLogOut, FiKey } from "react-icons/fi";
 
 export default function Navbar({ userData }) {
   const [showProfile, setShowProfile] = useState(false);
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const profileRef = useRef(null);
   const navigate = useNavigate(); // ✅ Initialize navigation
-  console.log(userData);
+
   //  Close profile card when clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
@@ -22,6 +26,32 @@ export default function Navbar({ userData }) {
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
+  };
+
+  // Change Password function
+  const handleChangePassword = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        "http://localhost:3000/api/user/users",
+        {
+          oldPassword,
+          newPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response) {
+        alert("Password changed successfully");
+        setShowChangePassword(false);
+      }
+    } catch (error) {
+      alert(error.response?.data?.msg || "Failed to change password");
+    }
   };
 
   return (
@@ -63,6 +93,15 @@ export default function Navbar({ userData }) {
               </div>
             </div>
 
+            {/* Change Password Button */}
+            <button
+              className="w-full flex items-center justify-center space-x-2 p-2 text-blue-600 hover:bg-gray-100 rounded mt-2 text-sm"
+              onClick={() => setShowChangePassword(true)}
+            >
+              <FiKey size={14} />
+              <span>Change Password</span>
+            </button>
+
             {/* Logout Button */}
             <button
               className="w-full flex items-center justify-center space-x-2 p-2 text-red-600 hover:bg-gray-100 rounded mt-2 text-sm"
@@ -74,6 +113,43 @@ export default function Navbar({ userData }) {
           </div>
         )}
       </div>
+
+      {/* Change Password Popup */}
+      {showChangePassword && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-5 rounded-lg shadow-lg w-96">
+            <h2 className="text-lg font-semibold mb-4">Change Password</h2>
+            <input
+              type="password"
+              placeholder="Old Password"
+              className="w-full p-2 border rounded mb-2"
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="New Password"
+              className="w-full p-2 border rounded mb-2"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+            <div className="flex justify-end gap-2">
+              <button
+                className="px-4 py-2 bg-gray-300 rounded"
+                onClick={() => setShowChangePassword(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-2 bg-blue-600 text-white rounded"
+                onClick={handleChangePassword}
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

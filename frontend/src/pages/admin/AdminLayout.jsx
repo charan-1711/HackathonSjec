@@ -6,7 +6,12 @@ import NavBar from "../../components/NavBar";
 
 export default function AdminDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState({
+    _id: "",
+    name: "",
+    email: "",
+    role: "",
+  });
   const [dashboardMetrics, setDashboardMetrics] = useState(null);
   const [usersData, setUsersData] = useState([]);
   const [subjectsData, setSubjectsData] = useState([]); // ✅ State for storing all subjects
@@ -31,9 +36,8 @@ export default function AdminDashboard() {
         }
       );
 
-      console.log("API response:", response.data);
-
       setUserData(response.data.user);
+
       setDashboardMetrics(response.data.dashboardMetrics);
     } catch (error) {
       console.error(
@@ -120,8 +124,9 @@ export default function AdminDashboard() {
               setSidebarOpen,
               dashboardMetrics,
               usersData,
+              userData,
               subjectsData,
-              fetchUserDetails,
+              fetchAllUsers,
               fetchAllSubjects,
             }}
           />

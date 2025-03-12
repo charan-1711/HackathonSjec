@@ -5,12 +5,14 @@ import axios from "axios";
 
 export default function Users() {
   // ✅ Get users from Outlet context
-  const { usersData, fetchUserDetails } = useOutletContext();
+  const { usersData, fetchAllUsers, userData } = useOutletContext();
 
   // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newUser, setNewUser] = useState({ name: "", email: "", role: "" });
   const [loading, setLoading] = useState(false);
+
+  console.log({ userss: userData });
 
   // ✅ Function to add a new user using API
   const handleAddUser = async () => {
@@ -40,7 +42,7 @@ export default function Users() {
       setIsModalOpen(false);
       setNewUser({ name: "", email: "", role: "" });
 
-      fetchUserDetails();
+      fetchAllUsers();
     } catch (error) {
       console.error(
         "Error adding user:",
@@ -57,13 +59,18 @@ export default function Users() {
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-semibold text-gray-800">Users</h1>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600"
-        >
-          <FiUserPlus size={20} />
-          Add User
-        </button>
+        {/* <h1> {userData.role}</h1> */}
+        {userData.role == "admin" ? (
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600"
+          >
+            <FiUserPlus size={20} />
+            Add User
+          </button>
+        ) : (
+          ""
+        )}
       </div>
 
       {/* Users Table */}

@@ -86,7 +86,7 @@ export default function SideBar({ sidebarOpen, setSidebarOpen }) {
                 <span>Users</span>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 to="reports"
                 className="flex items-center space-x-3 text-gray-700 hover:bg-blue-200 p-2 rounded-lg cursor-pointer"
@@ -95,7 +95,7 @@ export default function SideBar({ sidebarOpen, setSidebarOpen }) {
                 <FiBarChart2 />
                 <span>Reports</span>
               </Link>
-            </li>
+            </li> */}
           </ul>
         </nav>
       </aside>
