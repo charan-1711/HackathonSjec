@@ -71,4 +71,26 @@ const addUser = asyncHandler(async (req, res) => {
   });
 });
 
-export { addUser, signin };
+const changePassword = asyncHandler(async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+
+  if (!oldPassword || !newPassword) {
+    return res.status(400).json({ msg: "Old and new passwords are required" });
+  }
+
+  const user = await userModel.findById(req.userId);
+  if (!user) {
+    return res.status(404).json({ msg: "User not found" });
+  }
+
+  if (user.password !== oldPassword) {
+    return res.status(401).json({ msg: "Incorrect old password" });
+  }
+
+  user.password = newPassword;
+  await user.save();
+
+  res.status(200).json({ message: "Password changed successfully" });
+});
+
+export { addUser, signin, changePassword };
